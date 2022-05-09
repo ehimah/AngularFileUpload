@@ -4,8 +4,18 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
+<div class="text-center" ng-app="fileUploadApp">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <div ng-controller="UploadCtrl">
+        <h4>Upload on file select</h4>
+
+        <input name="uploadId" ng-model="documentId" type="text" />
+        <button ngf-select="uploadFiles($files, $invalidFiles)" multiple
+                accept="pdf/*" ngf-accept="'pdf/*'" ngf-max-height="1000" ngf-max-size="1MB" ngf-pattern="'.pdf'">
+            Select Files
+        </button>
+    </div>
 </div>
 

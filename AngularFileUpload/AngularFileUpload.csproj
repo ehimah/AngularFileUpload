@@ -6,5 +6,6 @@
 
   <ItemGroup>
     <None Remove="AngularJS.Core" />
+    <None Remove="angular-file-upload" />
   </ItemGroup>
 </Project>

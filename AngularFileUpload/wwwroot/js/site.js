@@ -3,3 +3,5 @@
 
 // Write your JavaScript code.
 
+var app = angular.module('fileUploadApp', ['ngFileUpload']);
+
