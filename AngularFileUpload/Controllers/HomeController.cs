@@ -59,6 +59,21 @@ namespace AngularFileUpload.Controllers
             return Json(new { files = uploadedFiles });
         }
 
+        [HttpGet]
+        [Route("download")]
+        public FileResult DownloadFile(string documentId, string fileName)
+        {
+            //Build the File Path.
+            string path = Path.Combine(this.Environment.WebRootPath, "Uploads", documentId, fileName);
+
+            //Read the File data into Byte Array.
+            byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+            //Send the File to Download.
+            return File(bytes, "application/octet-stream", fileName);
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
