@@ -6,16 +6,21 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using AngularFileUpload.Models;
+using System.IO;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Hosting;
 
 namespace AngularFileUpload.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private IHostingEnvironment Environment;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, IHostingEnvironment _environment)
         {
             _logger = logger;
+            Environment = _environment;
         }
 
         public IActionResult Index()
@@ -26,6 +31,32 @@ namespace AngularFileUpload.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        [HttpPost]
+        [Route("upload")]
+        public IActionResult Upload(List<IFormFile> files, string documentId)
+        {
+            string path = Path.Combine(this.Environment.WebRootPath, "Uploads", documentId);
+
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            var requestFiles = Request.Form.Files;
+
+            List<string> uploadedFiles = new List<string>();
+            foreach (IFormFile postedFile in requestFiles)
+            {
+                string fileName = Path.GetFileName(postedFile.FileName);
+                using (FileStream stream = new FileStream(Path.Combine(path, fileName), FileMode.Create))
+                {
+                    postedFile.CopyTo(stream);
+                    uploadedFiles.Add(fileName);
+                }
+            }
+
+            return Json(new { files = uploadedFiles });
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

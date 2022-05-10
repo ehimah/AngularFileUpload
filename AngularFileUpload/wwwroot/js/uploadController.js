@@ -4,9 +4,10 @@
 
         if (files) {
             Upload.upload({
-                url: '',
+                url: '/upload',
                 data: {
-                    files: files
+                    files: files,
+                    documentId: $scope.documentId,
                 }
             }).then(function (response) {
                 console.log('Files uploaded with response', response);
