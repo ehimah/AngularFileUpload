@@ -7,5 +7,14 @@
   <ItemGroup>
     <None Remove="AngularJS.Core" />
     <None Remove="angular-file-upload" />
+    <None Remove="Controllers\" />
+    <None Remove="Views\" />
+    <None Remove="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>
